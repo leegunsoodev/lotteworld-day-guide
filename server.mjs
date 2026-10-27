@@ -1,0 +1,3 @@
+import http from 'node:http';import fs from 'node:fs';import path from 'node:path';
+const types={'.html':'text/html','.js':'text/javascript','.css':'text/css','.svg':'image/svg+xml','.png':'image/png','.md':'text/plain'};
+http.createServer((req,res)=>{let p=decodeURIComponent(new URL(req.url,'http://localhost').pathname).replace(/^\/lotteworld-day-guide/,'');let f=path.resolve('.','.'+(p.endsWith('/')?p+'index.html':p));if(!f.startsWith(path.resolve('.')+path.sep)){res.writeHead(403).end();return;}fs.readFile(f,(e,b)=>{res.writeHead(e?404:200,{'Content-Type':types[path.extname(f)]||'application/octet-stream','Cache-Control':'no-cache'});res.end(e?'Not found':b);});}).listen(4173,'127.0.0.1',()=>console.log('http://127.0.0.1:4173/lotteworld-day-guide/'));
