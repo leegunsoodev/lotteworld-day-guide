@@ -8,13 +8,13 @@ test('추가 기구와 유튜브 직접 영상, 윗층 대체 경로',()=>{
  for(const id of ['dragon','pharaoh','stone','monorail','across','fantasy','horror','wild','jungle','wing','kart'])assert.ok(steps.some(s=>s.options.includes(id)));
  assert.equal(Object.keys(videos).length,16);
  for(const v of Object.values(videos))assert.match(v.url,/^https:\/\/www.youtube.com\/watch\?v=[\w-]{11}$/);
- assert.equal(resolve(choose(initialState(),8,'pharaoh'))[8].place.floor,'4F');
+ assert.equal(resolve(choose(initialState(),6,'pharaoh'))[6].place.floor,'4F');
 });
 test('적당한 스릴 코스와 순한 대안, 예전 강한 기구 선택 복원',()=>{
- assert.equal(resolve(initialState())[1].id,'stone');assert.equal(resolve(initialState())[7].id,'flyventure');
+ assert.equal(resolve(initialState())[1].id,'wild');assert.equal(resolve(initialState())[3].id,'flyventure');
  assert.ok(steps.every(s=>s.options.every(id=>!['atlantis','french','pirate'].includes(id))));
- assert.equal(resolve(choose(initialState(),1,'atlantis'))[1].id,'stone');
- assert.equal(resolve(choose(initialState(),1,'castle'))[1].place.floor,'M');
+ assert.equal(resolve(choose(initialState(),1,'atlantis'))[1].id,'wild');
+ assert.equal(resolve(choose(initialState(),10,'castle'))[10].place.floor,'M');
 });
 test('완료 후 다음 단계, 이전 이동과 저장 복원',()=>{
  let s=initialState(); s=advance(s,10); assert.equal(s.current,1); assert.deepEqual(s.done,[0]);

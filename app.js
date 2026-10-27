@@ -1,10 +1,22 @@
+import {migrateV2} from './migration.js';
 import {videos} from './videos.js';
 import {setupMapFullscreen} from './fullscreen.js';
 import {initialState,restore,advance,previous,choose} from './state.js';
 import {steps,places,resolve,directions,links} from './data.js';
 import {RouteMap} from './map.js';
-const $=id=>document.getElementById(id),KEY='lotte-day-v2';
-let state;try{const raw=localStorage.getItem(KEY);if(raw)state=restore(raw,steps.length);else{const oldRaw=localStorage.getItem('lotte-day-v1');state=oldRaw?restore(oldRaw,14):initialState();if(oldRaw){state.current+=state.current>=8?1:0;state.done=state.done.map(i=>i>=8?i+1:i);state.choices=Object.fromEntries(Object.entries(state.choices).map(([i,v])=>[+i>=8?+i+1:+i,v]));if(state.done.includes(1)&&!state.choices[1])state.choices[1]='comet';if(state.done.includes(6)&&!state.choices[6])state.choices[6]='carousel';localStorage.setItem(KEY,JSON.stringify(state));}}}catch{state=initialState();}
+const $=id=>document.getElementById(id),KEY='lotte-day-v3';
+// 코스 번호가 바뀌어도 이미 선택·완료한 장소를 기준으로 복원한다.
+let state;try{
+ const raw=localStorage.getItem(KEY);
+ if(raw)state=restore(raw,steps.length);
+ else{
+  const v2=localStorage.getItem('lotte-day-v2'),v1=localStorage.getItem('lotte-day-v1');
+  let old=restore(v2||v1, v2?15:14);
+  if(!v2&&v1){old.current+=old.current>=8?1:0;old.done=old.done.map(i=>i>=8?i+1:i);old.choices=Object.fromEntries(Object.entries(old.choices).map(([i,v])=>[+i>=8?+i+1:+i,v]));if(old.done.includes(1)&&!old.choices[1])old.choices[1]='comet';if(old.done.includes(6)&&!old.choices[6])old.choices[6]='carousel';}
+  state=v2||v1?migrateV2(old):initialState();
+  localStorage.setItem(KEY,JSON.stringify(state));
+ }
+}catch{state=initialState();}
 let selected=state.current,period='all',floor=resolve(state)[state.current].place.floor;
 const map=new RouteMap($('route-map'),i=>select(i,false));
 const label=p=>({morning:'오전',afternoon:'오후',evening:'저녁'}[p]);
@@ -14,13 +26,13 @@ function toast(t){$('toast').textContent=t;clearTimeout(toast.timer);toast.timer
 function title(s,i){return `<div class="step-title"><span class="num">${i+1}</span><div><h3>${escape(s.place.name)}</h3><div class="meta">${label(s.period)} · ${s.place.floor==='M'?'실외 · 매직아일랜드':`실내 · ${s.place.floor}`} · ${s.required?'필수 일정':'선택 코스'}</div></div></div>`;}
 
 function videoLink(id){const v=videos[id];if(!v)return '';return '<a class="video-link" href="'+v.url+'" target="_blank" rel="noopener noreferrer" aria-label="'+escape(places[id].name)+' 유튜브 영상 보기"><svg viewBox="0 0 32 24" aria-hidden="true"><rect width="32" height="24" rx="7" fill="#d91c26"/><path d="M13 6 L23 12 L13 18 Z" fill="white"/></svg><span>'+escape(v.label||'유튜브 영상 보기')+'</span><span aria-hidden="true">↗</span></a>'+(v.note?'<p class="small">'+escape(v.note)+'</p>':'');}
-const previewSlots={stone:1,comet:1,fantasy:1,horror:1,wild:1,jungle:1,wing:1,sinbad:3,flume:4,dragon:6,kart:6,carousel:6,flyventure:7,monorail:8,pharaoh:8,across:8};
+const previewSlots={wild:1,jungle:1,wing:1,dragon:2,kart:2,carousel:2,flyventure:3,monorail:5,pharaoh:6,across:6,sinbad:7,flume:7,stone:10,fantasy:10,horror:10,comet:10};
 function renderPreviews(){
  $('ride-previews').innerHTML=Object.entries(previewSlots).map(([id,slot])=>'<article class="panel ride-preview"><h3>'+escape(places[id].name)+'</h3><p class="meta">'+(places[id].floor==='M'?'매직아일랜드':places[id].floor)+' · '+escape(places[id].limit||'현장 조건 확인')+'</p><p>'+escape(places[id].note)+'</p>'+videoLink(id)+'<button data-pick-ride="'+id+'" data-slot="'+slot+'">코스 '+(slot+1)+'에서 이 기구 선택</button></article>').join('');
  $('ride-previews').querySelectorAll('[data-pick-ride]').forEach(b=>b.onclick=()=>{const i=+b.dataset.slot;state=choose(state,i,b.dataset.pickRide);if(steps[i].indoor)state.indoor=false;selected=i;period='all';floor=resolve(state)[i].place.floor;save();render();$('step-'+(i+1)).scrollIntoView();});
 }
 
-function details(s){return `<p>${escape(s.place.note)}</p>${videoLink(s.id)}${s.place.limit?`<p class="small">탑승 기준: ${s.place.limit}. 그 외 탑승 제한도 <a href="${s.place.url||links.rides}" target="_blank" rel="noopener">공식 상세</a>와 현장에서 확인해요.</p>`:''}${s.id==='parade'?`<div class="notice"><strong>관람 전 집결: 1F 가든스테이지 주변</strong><p>가든스테이지는 위치 확인용 랜드마크예요. 확정 관람석이 아니에요. 직원이 안내하는 관람선 밖에서 기다려요.</p><p class="small">어드벤처 1F에서 관람해요. 오늘 관람 자리는 직원에게 물어봐요.</p><a href="${links.shows}" target="_blank" rel="noopener">오늘 공연 시간 확인 ↗</a></div>`:''}`;}
+function details(s){return `${s.hint?`<p class="notice">${escape(s.hint)}</p>`:''}<p>${escape(s.place.note)}</p>${videoLink(s.id)}${s.place.limit?`<p class="small">탑승 기준: ${s.place.limit}. 그 외 탑승 제한도 <a href="${s.place.url||links.rides}" target="_blank" rel="noopener">공식 상세</a>와 현장에서 확인해요.</p>`:''}${s.id==='parade'?`<div class="notice"><strong>관람 전 집결: 1F 가든스테이지 주변</strong><p>가든스테이지는 위치 확인용 랜드마크예요. 확정 관람석이 아니에요. 직원이 안내하는 관람선 밖에서 기다려요.</p><p class="small">어드벤처 1F에서 관람해요. 오늘 관람 자리는 직원에게 물어봐요.</p><a href="${links.shows}" target="_blank" rel="noopener">오늘 공연 시간 확인 ↗</a></div>`:''}`;}
 function render(){const list=resolve(state),s=list[state.current];$('progress').textContent=`${state.done.length}/${steps.length} 완료`;$('current').innerHTML=title(s,state.current)+`<p class="meta">${s.time}</p>`;$('next').innerHTML=`<strong>다음에 갈 곳 · ${list[state.current+1]?.place.name||'함께 귀가 완료'}</strong><p class="small">${directions(s.place,list[state.current+1]?.place)}</p>`;
  $('cards').innerHTML=list.map((s,i)=>`<article class="panel route-card ${s.period}-card ${i===selected?'selected':''}" id="step-${i+1}"><button class="card-select" data-select="${i}" aria-label="코스 ${i+1} ${s.place.name} 지도에서 보기">${title(s,i)}<p class="meta">${s.time}</p></button>${state.done.includes(i)?'<p class="done">✓ 다녀왔어요</p>':''}${details(s)}${s.options.length>1?`<label class="choice" for="choice-${i}">${i===11?'취소·미운영이면 대체하기':'대기·취향에 맞춰 고르기'}</label><select id="choice-${i}" data-choice="${i}" ${state.indoor&&s.indoor?'disabled':''}>${(state.indoor&&s.indoor?[s.indoor]:s.options).map(id=>`<option value="${id}" ${s.id===id?'selected':''}>${places[id].name}${['meeting','castle'].includes(id)?' · 사진/휴식':''}</option>`).join('')}</select>`:''}<p class="small"><strong>다음 이동 →</strong> ${directions(s.place,list[i+1]?.place)}</p><button data-current="${i}">${state.current===i?'지금 단계예요':'여기를 현재 단계로'}</button></article>`).join('');
  $('cards').querySelectorAll('[data-select]').forEach(b=>b.onclick=()=>select(+b.dataset.select,true));$('cards').querySelectorAll('[data-current]').forEach(b=>b.onclick=()=>{state.current=+b.dataset.current;selected=state.current;floor=resolve(state)[selected].place.floor;save();render();$('current').scrollIntoView({block:'center'});});$('cards').querySelectorAll('[data-choice]').forEach(c=>c.onchange=()=>{const i=+c.dataset.choice;state=choose(state,i,c.value);selected=i;period='all';floor=resolve(state)[i].place.floor;save();render();toast('선택 코스와 다음 이동을 바꿨어요.');});
@@ -28,7 +40,7 @@ function render(){const list=resolve(state),s=list[state.current];$('progress').
 }
 function renderMap(){const list=resolve(state);const route=[list[selected-1],list[selected],list[selected+1]].filter(Boolean);$('map-route').textContent=route.map(s=>s.place.name+' ('+s.place.floor+')').join(' → ');$('floor').value=floor;$('periods').innerHTML=[['all','전체'],['morning','오전'],['afternoon','오후'],['evening','저녁']].map(([id,name])=>`<button data-period="${id}" aria-pressed="${id===period}">${name}</button>`).join('');$('periods').querySelectorAll('button').forEach(b=>b.onclick=()=>{period=b.dataset.period;renderMap();});map.draw(list,selected,period,floor);if(period==='all'&&floor===list[selected].place.floor)map.focus(selected);const s=list[selected];$('map-detail').innerHTML=`<p class="eyebrow">선택한 코스 · 현재 단계 ${state.current+1}과 다를 수 있어요</p>${title(s,selected)}<p class="meta">${s.time}</p>${details(s)}<p class="small"><strong>이곳으로 → </strong>${selected?directions(list[selected-1].place,s.place):'정문 B1에서 출발해요.'}</p><p class="small"><strong>다음으로 → </strong>${directions(s.place,list[selected+1]?.place)}</p><a class="button" href="#step-${selected+1}">이 일정 카드 열기</a>`;}
 function select(i,scroll){selected=i;period='all';floor=resolve(state)[i].place.floor;render();map.focus(i);if(scroll)$('map').scrollIntoView();}
-$('prev').onclick=()=>{state=previous(state);selected=state.current;save();render();};$('next-step').onclick=()=>{state=advance(state,steps.length);selected=state.current;save();render();toast(state.current===steps.length-1?'네 명 모두 함께 귀가해요.':'다음 단계로 이동했어요.');};
+$('prev').onclick=()=>{state=previous(state);selected=state.current;period='all';floor=resolve(state)[selected].place.floor;save();render();};$('next-step').onclick=()=>{state=advance(state,steps.length);selected=state.current;period='all';floor=resolve(state)[selected].place.floor;save();render();toast(state.current===steps.length-1?'네 명 모두 함께 귀가해요.':'다음 단계로 이동했어요.');};
 $('indoor').onchange=e=>{state.indoor=e.target.checked;state.done=state.done.filter(i=>!steps[i].indoor);period='all';floor='all';save();render();toast(state.indoor?'야외 일정을 실내로 바꿨어요.':'기본 야외 코스로 돌아왔어요.');};
 $('floor').onchange=e=>{floor=e.target.value;renderMap();};$('zoom-in').onclick=()=>map.zoom(.75);$('zoom-out').onclick=()=>map.zoom(1.33);$('fit').onclick=()=>{period='all';floor='all';renderMap();map.fit();};$('focus').onclick=()=>{period='all';floor=resolve(state)[selected].place.floor;renderMap();map.focus(selected);};$('show-current').onclick=()=>select(state.current,false);
 $('reset').onclick=()=>$('reset-confirm').hidden=false;$('reset-no').onclick=()=>$('reset-confirm').hidden=true;$('reset-yes').onclick=()=>{state=initialState();selected=0;period='all';floor='all';save();render();$('reset-confirm').hidden=true;toast('처음 단계로 돌아왔어요.');};

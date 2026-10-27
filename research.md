@@ -129,3 +129,7 @@ REA 정적 분석에서 제공 파일은 롯데월드 앱이 아닌 Uptodown 7.4
 | 와일드 정글 | [(sub) 4K 와일드 정글 1인칭 탑승영상 / 롯데월드 어드벤처 / Wild Jungle POV Lotte World Adventure Korea](https://www.youtube.com/watch?v=nl8iwuDYiLU) | MIN NEWS |
 | 와일드 윙 | [(sub) 4K 와일드 윙 1인칭 탑승영상 Wild Wing POV / 롯데월드 어드벤처 Lotte World Adventure Korea](https://www.youtube.com/watch?v=8RO_wQnDW44) | MIN NEWS |
 | 카트라이더레이싱월드 | [롯데월드 카트라이더 신규 트랙은 못 참지..월드 카트레이싱 머신맨이 직접 체험해보았습니다🚗​](https://www.youtube.com/watch?v=VcYvhUsZpQw) | 롯데월드 LOTTE WORLD |
+
+
+## 2026-10-27 동선 재정리
+기존 공식 지도 도판과 시설 좌표를 다시 대조했다. B1 와일드 3종은 입장 직후, 1F 드래곤·플라이벤처는 같은 동쪽 구역, 신밧드·식사·투썸은 서쪽 구역으로 묶는다. 3F 모노레일과 4F 파라오/어크로스다크는 연속 방문한다. 야외를 오전과 저녁에 나눠 방문하던 구성을 저녁 한 번으로 줄인다. 야외 기구는 택1 후 캐슬 사진, 공연 20~30분 전 실내 복귀를 우선한다. 위층 승강 지점과 세부 보행길은 기존 확인 범위를 넘겨 만들지 않는다.
