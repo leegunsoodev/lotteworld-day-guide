@@ -106,3 +106,26 @@ REA 정적 분석에서 제공 파일은 롯데월드 앱이 아닌 Uptodown 7.4
 사용자 요청으로 아트란티스·후렌치·스페인해적선을 선택 목록에서도 제외. 기본은 혜성특급→신밧드→후룸→휴식→회전목마→플라이벤처. 스릴 체감은 개인차가 있어 혜성의 어둠/회전, 후룸의 낙하, 플라이벤처의 높이감/화면 움직임을 짧게 안내한다. 모두 탈 수 있다고 보장하지 않는다.
 플라이벤처: 공식 시설 API shopSysCd=5360, 1F 드래곤와일드슈팅 입구 옆/어린이범퍼카 입구. 단독 키 140~195cm, 체중136kg 이하. 120~140cm 보호자 동반 예외는 친구끼리 방문에 적용하지 않음. 공식 상세 https://adventure.lotteworld.com/enjoy/attrctn/detail?shopSysCd=5360 . 최신 PDF 1F 시설12 위치에 지도 핀 추가.
 환타지드림은 공식 API에 호러 운영 관련 문구가 있어 순한 대안으로 추가하지 않았다. 순한 대안은 회전목마 또는 사진·휴식이다.
+
+## 추가 기구·유튜브 영상 (2026-10-27)
+공식 시설 목록 API와 제공 최신 지도 대조. 드래곤 4731=1F/110cm+, 파라오2444=4F/110~195, 스톤6313=M/110+, 모노레일1201=3F/전체이용(운행구간 당일), 어크로스5574=4F/110+, 환타지1209=M/단독110+, 호러6386=M/만13세이상 및110+, 와일드밸리5092·정글5093·윙5091=B1/110+, 카트5962=1F/130~180cm. 파라오 상세의 중간 점검 시각은 방문 날짜가 미정이므로 확정 일정으로 사용하지 않음.
+유튜브 검색 페이지의 제목·채널·기구 일치와 oEmbed HTTP200을 확인했다. 모든 영상을 끝까지 시청하거나 모든 기기 재생을 보증한 것은 아니다. 다운로드/재게시 없이 직접 watch 링크. 호러 현행 기묘한 악몽 영상은 확보하지 못해 이전 좀비트레인 참고 영상임을 표시. 모노레일 영상의 야외구간을 당일운행 보장으로 해석하지 않음.
+
+| 기구 | 영상 | 채널 |
+|---|---|---|
+| comet | [[4K] 롯데월드 혜성특급 맨 뒷자리 탑승영상👻 [2026.08.04]](https://www.youtube.com/watch?v=RFaJPWdj_x4) | EverTOTO |
+| sinbad | [[4K] 2026.01.30 롯데월드 신밧드의 모험 탑승영상 풀버전 (POV)](https://www.youtube.com/watch?v=u7eF81sBkQQ) | 재구언 |
+| flume | [롯데월드 후룸라이드 풀버전 탑승영상 - Flume Ride (POV) Full.ver Lotte World Adventure](https://www.youtube.com/watch?v=7Nm7rBNX3yI) | Theme Park Trip |
+| carousel | [[4K] 2024.04.15 롯데월드 회전목마 탑승영상](https://www.youtube.com/watch?v=3S9QTBPqLgM) | 재구언 |
+| flyventure | [[4K] 2026.02.03 롯데월드 플라이벤처 탑승영상 (2열 맨왼쪽자리 POV)](https://www.youtube.com/watch?v=AIf5SBJ4EYM) | 재구언 |
+| 드래곤 와일드슈팅 | [[4K] 2026.02.03 롯데월드 드래곤 와일드 슈팅 탑승영상 (앞자리 POV)](https://www.youtube.com/watch?v=G45wA8AW1HA) | 재구언 |
+| 파라오의 분노 | [롯데월드 파라오의 분노 탑승영상 - Pharaoh`s Fury Dark Ride (POV) Lotte World Adventure](https://www.youtube.com/watch?v=1spz_59qsoM) | Theme Park Trip |
+| 스톤익스프레스 | [[4K] 2026.04.01 롯데월드 스톤 익스프레스 (메이플스토리 롤러코스터) 맨앞자리 주간 탑승영상 / Lotte World Maple Island Stone Express](https://www.youtube.com/watch?v=qV6Sd0cxRQI) | 재구언 |
+| 월드모노레일 | [[테마파크] 롯데월드 월드 모노레일 탑승영상 주간버전 (Lotte World, World Monorail POV - Daytime)](https://www.youtube.com/watch?v=QyM6Km-kMkw) | 재구언 |
+| 어크로스다크 | [[4K] 2024.02.11 롯데월드 어크로스다크 탑승영상 (미션그린)](https://www.youtube.com/watch?v=L4E2wLYdV5A) | 재구언 |
+| 환타지드림 | [롯데월드 환타지드림 탑승영상 (자막 포함) - Fantasy Dream (POV) dark ride Lotte World Adventure](https://www.youtube.com/watch?v=keM8s1eC0_E) | Theme Park Trip |
+| 와일드 밸리 | [(sub) 4K 와일드 밸리 1인칭 탑승영상 Wild Tour Wild Valley POV / 롯데월드 어드벤처 Lotte World Adventure Korea](https://www.youtube.com/watch?v=GeZvwmYTkUY) | MIN NEWS |
+| 호러환타지드림 | [롯데월드 어드벤처 '좀비트레인: 삐에로의 저주'(환타지 드림) 탑승영상(Lotte World Adventure Fantasy Dreams Horror Attraction)](https://www.youtube.com/watch?v=wZshfipqg3w) | 환타지 드림Fantasy Dreams |
+| 와일드 정글 | [(sub) 4K 와일드 정글 1인칭 탑승영상 / 롯데월드 어드벤처 / Wild Jungle POV Lotte World Adventure Korea](https://www.youtube.com/watch?v=nl8iwuDYiLU) | MIN NEWS |
+| 와일드 윙 | [(sub) 4K 와일드 윙 1인칭 탑승영상 Wild Wing POV / 롯데월드 어드벤처 Lotte World Adventure Korea](https://www.youtube.com/watch?v=8RO_wQnDW44) | MIN NEWS |
+| 카트라이더레이싱월드 | [롯데월드 카트라이더 신규 트랙은 못 참지..월드 카트레이싱 머신맨이 직접 체험해보았습니다🚗​](https://www.youtube.com/watch?v=VcYvhUsZpQw) | 롯데월드 LOTTE WORLD |

@@ -1,6 +1,17 @@
 export const links={map:'https://adventure.lotteworld.com/usage-guide/service/guide-map',hours:'https://adventure.lotteworld.com/usage-guide/service/closed',closed:'https://adventure.lotteworld.com/usage-guide/service/closed',shows:'https://adventure.lotteworld.com/enjoy/performance/list',rides:'https://adventure.lotteworld.com/enjoy/attrctn/list'};
 // 위치와 층은 2026-09 공식 가이드맵을 근거로 한다. 실제 보행 좌표는 저장하지 않는다.
 export const places={
+dragon:{"name":"드래곤 와일드슈팅","floor":"1F","note":"회전목마 뒤편에서 드래곤을 맞히며 점수를 겨뤄요. 네 명이 점수 대결하기 좋은 선택!","limit":"친구끼리 탑승 110cm 이상","url":"https://adventure.lotteworld.com/enjoy/attrctn/detail?shopSysCd=4731"},
+pharaoh:{"name":"파라오의 분노","floor":"4F","note":"보물을 찾아 어두운 유적을 탐험해요. 차량 움직임과 갑작스러운 장면이 있어요. 무서운 연출이 싫으면 모노레일로 바꿔요.","limit":"110~195cm","url":"https://adventure.lotteworld.com/enjoy/attrctn/detail?shopSysCd=2444"},
+stone:{"name":"스톤익스프레스","floor":"M","note":"메이플아일랜드에서 즐기는 롤러코스터예요. 움직임이 괜찮을지 영상을 먼저 보고 네 명이 함께 골라요.","limit":"110cm 이상","url":"https://adventure.lotteworld.com/enjoy/attrctn/detail?shopSysCd=6313"},
+monorail:{"name":"월드모노레일","floor":"3F","note":"기차에 앉아 풍경을 보며 쉬어가요. 3F 동굴구역에서 타요. 실내·실외 운행 구간은 당일 확인해요.","limit":"공식 안내: 전체 이용 가능 · 현장 탑승 조건 확인","url":"https://adventure.lotteworld.com/enjoy/attrctn/detail?shopSysCd=1201"},
+across:{"name":"어크로스다크","floor":"4F","note":"우주로 떠나는 영상 모험이에요. 어둠·화면 움직임이 부담되면 모노레일로 바꿔요. 상영 내용은 영상과 다를 수 있어요.","limit":"110cm 이상","url":"https://adventure.lotteworld.com/enjoy/attrctn/detail?shopSysCd=5574"},
+fantasy:{"name":"환타지드림","floor":"M","note":"일반 버전의 동화 속 기차 여행이에요. 당일 일반 버전인지 확인해요. 공포 버전이면 이 코스는 건너뛰어요.","limit":"친구끼리 탑승 110cm 이상","url":"https://adventure.lotteworld.com/enjoy/attrctn/detail?shopSysCd=1209"},
+horror:{"name":"호러환타지드림","floor":"M","note":"공포 연출이 있는 별도 선택이에요. 네 명 모두 만 13세 이상이고 공포 체험을 원할 때만 골라요. 당일 운영·연령 조건을 확인해요.","limit":"만 13세 이상 · 110cm 이상","url":"https://adventure.lotteworld.com/enjoy/attrctn/detail?shopSysCd=6386"},
+wild:{"name":"와일드 밸리","floor":"B1","note":"물살을 헤치는 추격전 영상 체험이에요. 흔들림이나 멀미가 부담되면 사진·휴식으로 바꿔요.","limit":"110cm 이상","url":"https://adventure.lotteworld.com/enjoy/attrctn/detail?shopSysCd=5092"},
+jungle:{"name":"와일드 정글","floor":"B1","note":"고대 유적을 찾아 떠나는 영상 모험이에요. 와일드 밸리·윙과 같은 B1에서 취향에 맞게 골라요.","limit":"110cm 이상","url":"https://adventure.lotteworld.com/enjoy/attrctn/detail?shopSysCd=5093"},
+wing:{"name":"와일드 윙","floor":"B1","note":"바람을 가르며 나는 영상 체험이에요. 높이감·화면 움직임이 부담되면 다른 기구를 골라요.","limit":"110cm 이상","url":"https://adventure.lotteworld.com/enjoy/attrctn/detail?shopSysCd=5091"},
+kart:{"name":"카트라이더레이싱월드","floor":"1F","note":"로티스엠포리움 오른쪽에서 게임 속 카트를 직접 타봐요. 키 조건을 확인하고 현장 운전 안내를 따라요.","limit":"130~180cm","url":"https://adventure.lotteworld.com/enjoy/attrctn/detail?shopSysCd=5962"},
  flyventure:{name:'플라이벤처',floor:'1F',note:'화면 속 하늘을 나는 듯한 비행 체험이에요. 높이감·화면 움직임이 부담되거나 멀미가 나면 회전목마로 바꿔요. 친구끼리 탈 때는 모두 키 조건을 확인해요.',limit:'친구끼리 탑승 140~195cm · 체중 136kg 이하',url:'https://adventure.lotteworld.com/enjoy/attrctn/detail?shopSysCd=5360'},
  gate:{name:'정문 · 입장 준비',floor:'B1',note:'출발점으로 가정한 정문이에요. 표를 준비하고 화장실을 다녀와요. 공식 지도상 정문 근처 잇츠월드 옆에 화장실이 있어요.'},
  atlantis:{name:'아트란티스',floor:'M',note:'매직캐슬 뒤쪽에 있는 선택 기구. 인기 기구 한 개만 타도 충분해요.',limit:'135~190cm'},
@@ -23,13 +34,14 @@ export const places={
 };
 export const steps=[
  {time:'09:20~09:30',period:'morning',required:true,options:['gate']},
- {time:'개장~11:30',period:'morning',options:['comet','castle'],indoor:'meeting'},
+ {time:'개장~11:30',period:'morning',options:['stone','comet','fantasy','horror','wild','jungle','wing','castle'],indoor:'wild'},
  {time:'11:30~12:20',period:'afternoon',required:true,options:['school']},
  {time:'12:20~13:20',period:'afternoon',options:['sinbad','meeting']},
  {time:'13:20~14:00',period:'afternoon',options:['flume','carousel','meeting']},
  {time:'14:00~14:40',period:'afternoon',required:true,options:['twosome','meeting']},
- {time:'14:40~15:20',period:'afternoon',options:['carousel','meeting']},
- {time:'15:20~17:00 · 대기에 맞춰 조정',period:'afternoon',options:['flyventure','carousel','meeting']},
+ {time:'14:40~15:20',period:'afternoon',options:['dragon','kart','carousel','meeting']},
+ {time:'15:20~16:10 · 대기에 맞춰 조정',period:'afternoon',options:['flyventure','dragon','kart','carousel','meeting']},
+ {time:'16:10~17:00 · 여유가 있을 때 1개만',period:'afternoon',options:['monorail','pharaoh','across','meeting']},
  {time:'17:00~18:00 · 공연에 맞춰 조정',period:'evening',required:true,options:['dinner']},
  {time:'저녁 후 · 공연과 겹치면 생략',period:'evening',options:['castle','meeting'],indoor:'meeting'},
  {time:'시작 20~30분 전 도착 · 시간 당일 확인',period:'evening',required:true,options:['parade','meeting','sinbad']},
