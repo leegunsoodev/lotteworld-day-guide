@@ -86,3 +86,15 @@
 ## 제공 APK 분석 결과
 
 REA 정적 분석에서 제공 파일은 롯데월드 앱이 아닌 Uptodown 7.41(package com.uptodown)이었다. 내장 APK 또는 롯데월드 지도/시설 좌표 자료를 발견하지 못했다. 해당 파일의 자료는 사이트에 반영하지 않았다. 추가 분석에는 실제 com.lotteworld.android.adventure APK가 필요하다. 설치·실행은 하지 않았다. 상세 로컬 증거는 별도 작업 기록에 보관한다.
+
+## 실제 롯데월드 XAPK REA 분석 반영
+
+사용자 제공 1.1.9 XAPK의 base 패키지는 com.lotteworld.android.adventure, versionCode 71. REA 안전 추출 및 Apktool 리소스 정적 디코딩, JSON/GLB 원본 분석으로 확인했다. 앱 설치/실행 및 인증 API 호출은 하지 않았다. 배포자 서명 진위는 별도 검증하지 않았다.
+- res/raw/src_components_map_data_mappoidata.json: 시설 173개, 앱 map_pos와 로컬 coordinates.
+- assets/Lotteworld/Jamsil/Jamsil.amproj: Stage 6, POI 186, GraphNode 586, 층내 GraphEdge 643.
+- 층별 GLB 6개. 전체 코드/지도 GLB/그래프 데이터는 공개 재배포하지 않았다.
+- 층간은 GraphNode.joints로 연결. B1↔1F 11쌍, 1F↔2F 15쌍, 2F↔Magicisland 4쌍 확인.
+- 신밧드 가까운 1F546/548·1416 ↔ 2F20/21·39. 해당 구역 GLB Escalator/Stair와 최신 PDF의 신밧드 옆 2F 이동 표기가 일치. 기존 안내를 추가로 검증했다.
+- 후렌치 주변 2F17/38·18 ↔ 1F532/1382·533. 1F 어린이범퍼카/매드포갈릭 구역과 2F 퀴즈노스/앤티앤스 구역의 계단·에스컬레이터가 대응. 이 랜드마크 관계를 카드·층 이동 안내에 적용했다.
+- 정문 자체의 POI가 없어 B1 어느 승강 지점을 입장 후 이용하는지는 확정하지 않았다. B1 픽시매직 부근→1F 배틀그라운드/사진상점 연결 후보는 있지만 강제 경로로 지정하지 않았다.
+- 앱에 구식 명칭도 있다. 영업·명칭·층 도착 정보는 최신 PDF/API 우선. 앱 좌표와 PDF 픽셀은 다른 좌표계이며 일치 변환을 검증하지 않았으므로 실제 보행선처럼 실선으로 옮기지 않았다. 거리 단위/이동시간/상행·하행 규칙은 추정하지 않았다.

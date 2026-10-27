@@ -1,7 +1,7 @@
 // 사용자 제공 공식 PDF 지도에 코스 핀을 올린다. 좌표는 대표 시설 위치이며 입구 좌표는 아니다.
 const NS='http://www.w3.org/2000/svg';
 const layers={B1:{w:900,h:650,title:'실내 B1 · 정문'},'1F':{w:1000,h:700,title:'실내 1F · 어드벤처'},'2F':{w:800,h:330,title:'실내 2F · 어드벤처'},'3F':{w:700,h:340,title:'실내 3F'},'4F':{w:680,h:370,title:'실내 4F'},M:{w:780,h:700,title:'실외 · 매직아일랜드'}};
-const anchors={gate:[740,540,'R',450],exit:[740,540,'R',450],atlantis:[470,275,'R',160],comet:[185,470,'L',430],castle:[425,450,'R',430],school:[142,373,'L',140],dinner:[142,373,'L',140],sinbad:[107,400,'L',310],pirate:[97,467,'L',500],flume:[188,595,'L',630],twosome:[212,410,'R',370],meeting:[540,208,'R',120],final:[540,208,'R',120],parade:[270,490,'R',530],french:[715,235,'R',160]};
+const anchors={carousel:[775,315,'R',20],gift:[282,323,'L',20],gate:[740,540,'R',450],exit:[740,540,'R',450],atlantis:[470,275,'R',160],comet:[185,470,'L',430],castle:[425,450,'R',430],school:[142,373,'L',140],dinner:[142,373,'L',140],sinbad:[107,400,'L',310],pirate:[97,467,'L',500],flume:[188,595,'L',630],twosome:[212,410,'R',370],meeting:[540,208,'R',120],final:[540,208,'R',120],parade:[270,490,'R',530],french:[715,235,'R',160]};
 const colors={morning:'#986014',afternoon:'#086a59',evening:'#7246a1'};
 export class RouteMap {
  constructor(svg,onSelect){this.svg=svg;this.onSelect=onSelect;this.view={x:0,y:0,w:1600,h:1000};this.points=new Map();this.pointers=new Map();this.bind();}
@@ -13,7 +13,7 @@ export class RouteMap {
  for(const f of selectedLayers){const l=layers[f];offsets[f]=offset;this.el('rect',{x:0,y:offset,width:1600,height:l.h+230,rx:24,fill:'#fffdf7',stroke:'#d5dfd1','stroke-width':3},this.svg);this.el('text',{x:30,y:offset+45,'font-size':30,'font-weight':800,fill:'#174d45'},this.svg,l.title);this.el('text',{x:30,y:offset+80,'font-size':20,fill:'#526459'},this.svg,'공식 지도 위 코스 표시 · 핀은 대표 위치 · 실제 입구는 현장 확인');this.el('image',{href:`./maps/${f}.webp`,x:300,y:offset+110,width:l.w,height:l.h},this.svg);
  const callout=(x,y,t)=>{this.el('rect',{x:x-8,y:offset+y-24,width:t.length*17+20,height:38,rx:7,fill:'#fff7cb',stroke:'#9b721e'},this.svg);this.el('text',{x,y:offset+y,'font-size':20,'font-weight':800,fill:'#624710'},this.svg,t);};
  if(f==='1F'){callout(310,160,'1F ↔ 2F · 매직아일랜드 연결');this.el('path',{d:`M 460 ${offset+172} L 395 ${offset+450}`,stroke:'#ac791b','stroke-width':4,'stroke-dasharray':'8 6',fill:'none'},this.svg);callout(800,815,'회전바구니 옆 계단 ↔ 피크닉 2F');callout(840,335,'WC · 만남의 광장 안쪽');callout(700,780,'WC');}
- if(f==='M')callout(970,800,'연결 다리 ↔ 실내 2F');if(f==='B1')callout(840,690,'WC · 잇츠월드 옆');offset+=l.h+260;}
+ if(f==='2F')callout(340,510,'퀴즈노스 쪽 계단·에스컬레이터 ↔ 1F 어린이범퍼카 쪽');if(f==='M')callout(970,800,'연결 다리 ↔ 실내 2F');if(f==='B1')callout(840,690,'WC · 잇츠월드 옆');offset+=l.h+260;}
  this.height=Math.max(600,offset);this.offsets=offsets;const groups=new Map();
  for(const s of shown){const a=anchors[s.id],y=offsets[s.place.floor]+110;if(a&&Number.isFinite(y)){const key=`${s.place.floor}:${a[0]}:${a[1]}`;if(!groups.has(key))groups.set(key,[]);groups.get(key).push(s);this.points.set(s.index,{x:300+a[0],y:y+a[1],floor:s.place.floor,labelX:a[2]==='L'?20:1310,labelY:y+a[3]});}}
  // 대안으로 같은 시설 방문이 늘어도 라벨이 겹치지 않게 여백에 배치한다.
