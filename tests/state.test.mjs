@@ -2,6 +2,13 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {initialState, advance, previous, restore, choose} from '../state.js';
 import {resolve,directions} from '../data.js';
+import {steps} from '../data.js';
+test('적당한 스릴 코스와 순한 대안, 예전 강한 기구 선택 복원',()=>{
+ assert.equal(resolve(initialState())[1].id,'comet');assert.equal(resolve(initialState())[7].id,'flyventure');
+ assert.ok(steps.every(s=>s.options.every(id=>!['atlantis','french','pirate'].includes(id))));
+ assert.equal(resolve(choose(initialState(),1,'atlantis'))[1].id,'comet');
+ assert.equal(resolve(choose(initialState(),1,'castle'))[1].place.floor,'M');
+});
 test('완료 후 다음 단계, 이전 이동과 저장 복원',()=>{
  let s=initialState(); s=advance(s,10); assert.equal(s.current,1); assert.deepEqual(s.done,[0]);
  assert.equal(previous(s).current,0); assert.deepEqual(restore(JSON.stringify(s),10),s);

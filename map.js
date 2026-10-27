@@ -1,7 +1,7 @@
 // 사용자 제공 공식 PDF 지도에 코스 핀을 올린다. 좌표는 대표 시설 위치이며 입구 좌표는 아니다.
 const NS='http://www.w3.org/2000/svg';
 const layers={B1:{w:900,h:650,title:'실내 B1 · 정문'},'1F':{w:1000,h:700,title:'실내 1F · 어드벤처'},'2F':{w:800,h:330,title:'실내 2F · 어드벤처'},'3F':{w:700,h:340,title:'실내 3F'},'4F':{w:680,h:370,title:'실내 4F'},M:{w:780,h:700,title:'실외 · 매직아일랜드'}};
-const anchors={carousel:[775,315,'R',20],gift:[282,323,'L',20],gate:[740,540,'R',450],exit:[740,540,'R',450],atlantis:[470,275,'R',160],comet:[185,470,'L',430],castle:[425,450,'R',430],school:[142,373,'L',140],dinner:[142,373,'L',140],sinbad:[107,400,'L',310],pirate:[97,467,'L',500],flume:[188,595,'L',630],twosome:[212,410,'R',370],meeting:[540,208,'R',120],final:[540,208,'R',120],parade:[270,490,'R',530],french:[715,235,'R',160]};
+const anchors={flyventure:[775,385,'R',20],carousel:[775,315,'R',20],gift:[282,323,'L',20],gate:[740,540,'R',450],exit:[740,540,'R',450],atlantis:[470,275,'R',160],comet:[185,470,'L',430],castle:[425,450,'R',430],school:[142,373,'L',140],dinner:[142,373,'L',140],sinbad:[107,400,'L',310],pirate:[97,467,'L',500],flume:[188,595,'L',630],twosome:[212,410,'R',370],meeting:[540,208,'R',120],final:[540,208,'R',120],parade:[270,490,'R',530],french:[715,235,'R',160]};
 const colors={morning:'#986014',afternoon:'#086a59',evening:'#7246a1'};
 export class RouteMap {
  constructor(svg,onSelect){this.svg=svg;this.onSelect=onSelect;this.view={x:0,y:0,w:1600,h:1000};this.points=new Map();this.pointers=new Map();this.bind();}
